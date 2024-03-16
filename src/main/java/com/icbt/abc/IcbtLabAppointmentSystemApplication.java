@@ -1,13 +1,13 @@
-package com.labappoinment.labappoinment;
+package com.icbt.abc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LabappoinmentApplication {
+public class IcbtLabAppointmentSystemApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LabappoinmentApplication.class, args);
+		SpringApplication.run(IcbtLabAppointmentSystemApplication.class, args);
 	}
 
 }
