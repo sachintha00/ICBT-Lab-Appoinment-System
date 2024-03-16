@@ -18,7 +18,8 @@ public class RequestResponse {
     private String token;
     private String refreshToken;
     private String expirationTime;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String email;
     private String role;
     private String password;
