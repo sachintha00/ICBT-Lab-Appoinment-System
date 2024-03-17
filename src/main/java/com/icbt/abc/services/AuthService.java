@@ -30,11 +30,12 @@ public class AuthService {
             ourUsers.setFirstName(registrationRequest.getFirstName());
             ourUsers.setLastName(registrationRequest.getLastName());
             ourUsers.setEmail(registrationRequest.getEmail());
+            ourUsers.setMobileNumber(registrationRequest.getMobileNumber());
             ourUsers.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
             ourUsers.setRole(registrationRequest.getRole());
             User ourUserResult = ourUserRepo.save(ourUsers);
             if (ourUserResult != null && ourUserResult.getId()>0) {
-                resp.setUser(ourUserResult);
+//                resp.setUser(ourUserResult);
                 resp.setMessage("User Saved Successfully");
                 resp.setStatusCode(200);
             }
@@ -55,6 +56,7 @@ public class AuthService {
             var jwt = jwtUtils.generateToken(user);
             response.setStatusCode(200);
             response.setToken(jwt);
+            response.setRole(user.getRole());
             response.setExpirationTime("24Hr");
             response.setMessage("Successfully Signed In");
         }catch (Exception e){
