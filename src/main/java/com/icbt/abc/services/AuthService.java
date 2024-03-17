@@ -27,6 +27,8 @@ public class AuthService {
         RequestResponse resp = new RequestResponse();
         try {
             User ourUsers = new User();
+            ourUsers.setFirstName(registrationRequest.getFirstName());
+            ourUsers.setLastName(registrationRequest.getLastName());
             ourUsers.setEmail(registrationRequest.getEmail());
             ourUsers.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
             ourUsers.setRole(registrationRequest.getRole());
