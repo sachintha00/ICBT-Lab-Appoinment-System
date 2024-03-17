@@ -21,6 +21,7 @@ public class RequestResponse {
     private String firstName;
     private String lastName;
     private String email;
+    private String mobileNumber;
     private String role;
     private String password;
 //    private List<Product> products;
