@@ -31,15 +31,6 @@ public class JWTUtils {
                 .signWith(Key)
                 .compact();
     }
-    public String generateRefreshToken(HashMap<String, Object> claims, UserDetails userDetails){
-        return Jwts.builder()
-                .claims(claims)
-                .subject(userDetails.getUsername())
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(Key)
-                .compact();
-    }
 
     public String extractUsername(String token){
         return extractClaims(token, Claims::getSubject);
