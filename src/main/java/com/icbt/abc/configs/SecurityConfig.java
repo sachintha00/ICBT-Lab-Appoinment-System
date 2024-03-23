@@ -34,6 +34,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request.requestMatchers("/auth/**").permitAll()
 //                        .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                         .requestMatchers("/user/**").hasAnyAuthority("USER")
+                        .requestMatchers("/lab_report_upload/**").hasAnyAuthority("USER")
 //                        .requestMatchers("/adminuser/**").hasAnyAuthority("USER", "ADMIN")
 //                        .requestMatchers("/technician/**").hasAnyAuthority("TEACH")
 //                        .requestMatchers("/appointment/**").permitAll()
