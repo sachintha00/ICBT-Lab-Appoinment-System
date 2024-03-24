@@ -1,5 +1,6 @@
 package com.icbt.abc.services;
 
+import com.icbt.abc.dtos.PasswordUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,11 +12,13 @@ import com.icbt.abc.entities.User;
 import com.icbt.abc.repositories.UserRepository;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AuthService {
     @Autowired
-    private UserRepository ourUserRepo;
+    private UserRepository userRepo;
     @Autowired
     private JWTUtils jwtUtils;
     @Autowired
@@ -33,7 +36,7 @@ public class AuthService {
             ourUsers.setMobileNumber(registrationRequest.getMobileNumber());
             ourUsers.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
             ourUsers.setRole(registrationRequest.getRole());
-            User ourUserResult = ourUserRepo.save(ourUsers);
+            User ourUserResult = userRepo.save(ourUsers);
             if (ourUserResult != null && ourUserResult.getId()>0) {
 //                resp.setUser(ourUserResult);
                 resp.setMessage("User Saved Successfully");
@@ -51,7 +54,7 @@ public class AuthService {
 
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(signinRequest.getEmail(),signinRequest.getPassword()));
-            var user = ourUserRepo.findByEmail(signinRequest.getEmail()).orElseThrow();
+            var user = userRepo.findByEmail(signinRequest.getEmail()).orElseThrow();
             System.out.println("USER IS: "+ user);
             var jwt = jwtUtils.generateToken(user);
             response.setStatusCode(200);
@@ -64,6 +67,52 @@ public class AuthService {
             response.setError(e.getMessage());
         }
         return response;
+    }
+
+    public RequestResponse updateUser(RequestResponse updateUser) {
+        RequestResponse resp = new RequestResponse();
+        try {
+            User existingUser = userRepo.findUserByEmail(updateUser.getEmail());
+
+            existingUser.setFirstName(updateUser.getFirstName());
+            existingUser.setLastName(updateUser.getLastName());
+            existingUser.setEmail(updateUser.getEmail());
+            existingUser.setMobileNumber(updateUser.getMobileNumber());
+
+            User updatedUser = userRepo.save(existingUser);
+            resp.setMessage("User Updated Successfully");
+            resp.setStatusCode(200);
+            resp.setUser(updatedUser);
+        } catch (Exception e) {
+            resp.setStatusCode(500);
+            resp.setError(e.getMessage());
+        }
+        return resp;
+    }
+
+    public PasswordUpdateDto updateUserPassword(String userId, PasswordUpdateDto updateUser) {
+        PasswordUpdateDto resp = new PasswordUpdateDto();
+        try {
+            User existingUser = userRepo.findUserById(Integer.parseInt(userId));
+
+            existingUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
+
+            userRepo.save(existingUser);
+            resp.setMessage("Password Updated Successfully");
+            resp.setStatusCode(200);
+        } catch (Exception e) {
+            resp.setStatusCode(500);
+            resp.setError(e.getMessage());
+        }
+        return resp;
+    }
+
+    public List<User> getAllUser() {
+        return userRepo.findAll();
+    }
+
+    public Optional<User> getSpecificUser(String userId) {
+        return userRepo.findById(Integer.parseInt(userId));
     }
 
 }

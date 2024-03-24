@@ -22,12 +22,17 @@ public class LabReportService {
         return labAppointment;
     }
 
-    public void storeReport(String appointmentId, String patientId, String patientDescription){
+    public List<Reports> getAllReportDetailsAccordingToUserId(Integer userId){
+        List<Reports> reportList = reportRepository.findByUserId(userId);
+        return reportList;
+    }
+
+    public void storeReport(String appointmentId, String patientId, String patientDescription, String fileName){
         Reports reports = new Reports();
 
         reports.setUserId(Integer.parseInt(patientId));
         reports.setAppointmentId(Integer.parseInt(appointmentId));
-        reports.setReportPath("D:\\Projects\\ICBT\\ICBT-Lab-Appoinment-System\\src\\main\\resources\\reports\\"+patientId);
+        reports.setReportPath("D:\\Projects\\ICBT\\ICBT-Lab-Appoinment-System\\src\\main\\resources\\reports\\"+patientId+"\\"+fileName);
         reports.setDescription(patientDescription);
 
         reportRepository.save(reports);

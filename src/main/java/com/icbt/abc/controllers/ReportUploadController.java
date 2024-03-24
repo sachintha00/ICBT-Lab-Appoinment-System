@@ -1,6 +1,7 @@
 package com.icbt.abc.controllers;
 
 import com.icbt.abc.entities.LabAppointment;
+import com.icbt.abc.entities.Reports;
 import com.icbt.abc.services.LabReportService;
 import com.icbt.abc.utilities.FileUploader;
 import jakarta.mail.internet.MimeMessage;
@@ -43,7 +44,7 @@ public class ReportUploadController {
                     return new ResponseEntity<>("Only PDF files are allowed", HttpStatus.BAD_REQUEST);
                 }
                 FileUploader.saveFile(uploadDir, fileName, file);
-                labReportService.storeReport(appointmentId, patientId, patientDescription);
+                labReportService.storeReport(appointmentId, patientId, patientDescription, fileName);
                 sendEmail(patientEmail, "File Uploaded Successfully", "Dear "+patientFullName+ ",\n\nHere attached your reports", file);
             } catch (IOException ioException) {
                 return new ResponseEntity<>("Failed to save file", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -64,6 +65,12 @@ public class ReportUploadController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @GetMapping("/get_all_report_details/{userId}")
+    public List<Reports> getAllReportDetails(@PathVariable Integer userId) {
+        List<Reports> reportsList = labReportService.getAllReportDetailsAccordingToUserId(userId);
+        return reportsList;
     }
 
     @GetMapping("/get_reports/{userId}")

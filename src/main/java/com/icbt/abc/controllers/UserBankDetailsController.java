@@ -29,4 +29,10 @@ public class UserBankDetailsController {
         userBankDetailsService.saveUserBankDetails(bankDetailsDTO);
         return new ResponseEntity<>("Bank details saved successfully", HttpStatus.CREATED);
     }
+
+    @PutMapping("/update_bank_details/{userId}")
+    public ResponseEntity<String> updateUserBankDetails(@PathVariable String userId,@RequestBody UserBankDetailsDto bankDetailsDTO) {
+        userBankDetailsService.updateUserBankDetails(userId, bankDetailsDTO);
+        return new ResponseEntity<>("Bank details updated successfully", HttpStatus.CREATED);
+    }
 }
