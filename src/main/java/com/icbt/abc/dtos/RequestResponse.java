@@ -13,6 +13,7 @@ import lombok.Data;
 public class RequestResponse {
 	
 	private int statusCode;
+    private int userId;
     private String error;
     private String message;
     private String token;

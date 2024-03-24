@@ -73,6 +73,12 @@ public class ReportUploadController {
         return reportsList;
     }
 
+    @GetMapping("/get_all_report_details")
+    public List<Reports> getAllReportDetails() {
+        List<Reports> reportsList = labReportService.getAllReportDetails();
+        return reportsList;
+    }
+
     @GetMapping("/get_reports/{userId}")
     public List<String> getFilePaths(@PathVariable Integer userId) {
         String basePath = "D:\\Projects\\ICBT\\ICBT-Lab-Appoinment-System\\src\\main\\resources\\reports\\" + userId;

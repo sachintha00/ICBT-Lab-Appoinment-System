@@ -59,6 +59,7 @@ public class AuthService {
             var jwt = jwtUtils.generateToken(user);
             response.setStatusCode(200);
             response.setToken(jwt);
+            response.setUserId(user.getId());
             response.setRole(user.getRole());
             response.setExpirationTime("24Hr");
             response.setMessage("Successfully Signed In");

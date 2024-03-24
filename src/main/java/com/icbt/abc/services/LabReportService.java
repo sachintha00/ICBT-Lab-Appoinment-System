@@ -27,6 +27,11 @@ public class LabReportService {
         return reportList;
     }
 
+    public List<Reports> getAllReportDetails(){
+        List<Reports> reportList = reportRepository.findAll();
+        return reportList;
+    }
+
     public void storeReport(String appointmentId, String patientId, String patientDescription, String fileName){
         Reports reports = new Reports();
 
