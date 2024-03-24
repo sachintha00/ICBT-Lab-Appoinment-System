@@ -13,6 +13,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -85,5 +86,13 @@ public class AppointmentService {
         Context context = new Context();
         context.setVariables(templateData);
         return templateEngine.process(templateName, context);
+    }
+
+    public List<LabAppointment> getAllAppointment(){
+        return appointmentRepositories.findAll();
+    }
+
+    public List<LabAppointment> getAllAppointmentAccordingToUserId(Integer userId){
+        return appointmentRepositories.findByUserId(userId);
     }
 }
